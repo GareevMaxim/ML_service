@@ -4,7 +4,7 @@
 
 ## Технологический стек
 * **Язык:** Python 3.11 (Alpine)
-* **Менеджер зависимостей:** `uv` (ультрабыстрый инструмент сборки)
+* **Менеджер зависимостей:** `uv` 
 * **API Сервер:** FastAPI + Uvicorn + Pydantic v2
 * **Контейнеризация:** Docker, Docker Compose (с общими Volumes)
 * **ML-модель:** Scikit-Learn Pipeline (StandardScaler + RandomForestClassifier)
@@ -21,7 +21,19 @@
 ## Инструкция по запуску
 
 ### 1. Подготовка
-Поместите ваш датасет в папку `data/creditcard.csv`, а базовую модель в `models_registry/model_v1.joblib`. Создайте файл `.env` на основе примера.
+Поместите ваш датасет в папку `data/creditcard.csv`: https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud.
+## Для создания модели для предсказания запустите следующую команду:
+```bash
+docker compose run --rm train
+```
+## Создайте файл `.env` на основе примера:
+
+PROJECT_NAME="Fraud Detection Service"
+ENV="development"
+DATA_DIR="data"
+MODELS_REGISTRY_DIR="models_registry"
+CLASSIFICATION_THRESHOLD=0.5
+
 
 ### 2. Запуск Inference-сервера (24/7)
 ```bash
