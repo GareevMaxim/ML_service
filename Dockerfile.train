@@ -1,0 +1,17 @@
+FROM ghcr.io/astral-sh/uv:python3.11-bookworm-slim
+
+WORKDIR /app
+
+ENV PYTHONUNBUFFERED=1
+
+COPY pyproject.toml uv.lock ./
+
+RUN uv sync --no-install-project
+
+COPY src/ ./src
+
+# Задаем переменную окружения PYTHONPATH, чтобы скрипт видел папку src внутри Docker
+ENV PYTHONPATH=.
+
+# По умолчанию контейнер выполняет скрипт обучения и выключается
+CMD ["uv", "run", "python", "src/train/pipeline.py"]

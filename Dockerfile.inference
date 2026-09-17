@@ -1,0 +1,17 @@
+FROM ghcr.io/astral-sh/uv:python3.11-bookworm-slim
+
+WORKDIR /app
+
+# Включаем оптимизацию для вывода логов в Docker без задержек
+ENV PYTHONUNBUFFERED=1
+
+#Зависимости
+COPY pyproject.toml uv.lock ./
+
+RUN uv sync --no-install-project
+
+COPY src/ ./src
+
+EXPOSE 8000
+
+CMD ["uv", "run", "uvicorn", "src.inference.app:app", "--host", "0.0.0.0", "--port", "8000"]
